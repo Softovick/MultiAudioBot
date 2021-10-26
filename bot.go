@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/xfrr/goffmpeg/transcoder"
@@ -34,7 +35,8 @@ func main() {
 
 	bot.Handle(telebot.OnVoice, func(msg *telebot.Message) {
 		//по умолчанию телеграмм обрабатывает аудио в формате ogg
-		voiceFile := "voices\\" + msg.Voice.UniqueID + ".ogg"
+		voiceFile := filepath.Join("voices", msg.Voice.UniqueID+".ogg")
+		//voiceFile := "voices\\" + msg.Voice.UniqueID + ".ogg"
 		bot.Download(&msg.Voice.File, voiceFile)
 		voiceFiles = append(voiceFiles, voiceFile)
 		fmt.Printf("%#v\n", voiceFiles)
